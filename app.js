@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
   res.redirect('/answer')
 })
 
-app.get('/event', (req, res) => {
+app.post('/event', (req, res) => {
   var ncco = []
 
   if(req.query.status == 'timeout' || req.query.status == 'unanswered'){
