@@ -1,5 +1,6 @@
 // Environment Variables
 // **********
+// CALLER_ID - The caller ID used for outbound connections
 // DEST_TYPE - The type of connection to connect the hotline to
 // DEST_NUMBER - The PSTN number to connect. This is used when DEST_TYPE is set to 'phone'
 // DEST_EXT - The Vonage Business Cloud extension number to connect. This is used when DEST_TYPE is set to 'vbc'
@@ -14,6 +15,7 @@
 const express = require('express')
 const app = express()
 const port = process.env.PORT || 3000
+const callerId = process.env.CALLER_ID
 
 const voiceName = process.env.VOICE_NAME || "Amy";
 
@@ -41,7 +43,7 @@ app.get('/event', (req, res) => {
 
     ncco.push({
       action: "connect",
-      from: from,
+      from: callerId,
       endpoint: endpoints
     })
   } else {
@@ -75,7 +77,7 @@ app.get('/answer', (req, res) => {
   ncco.push({
     action: 'connect',
     timeout: 3,
-    from: from,    
+    from: callerId,    
     eventType: "synchronous",
     eventUrl: [`${req.protocol}://${req.get('host')}/event`],
     endpoint: endpoints
