@@ -13,11 +13,15 @@
 // PORT - The port the application should listen on
 
 const express = require('express')
+const bodyParser = require('body-parser');
 const app = express()
 const port = process.env.PORT || 3000
 const callerId = process.env.CALLER_ID
 
 const voiceName = process.env.VOICE_NAME || "Amy";
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   res.redirect('/answer')
@@ -26,8 +30,8 @@ app.get('/', (req, res) => {
 app.post('/event', (req, res) => {
   var ncco = []
 
-  if(req.query.status == 'timeout' || req.query.status == 'unanswered'){
-    endpoints = []
+  if(['timeout','unanswered'].includes(req.body.status)){
+    var endpoints = []
 
     switch(process.env.FALLBACK_TYPE) {
       case 'phone':
