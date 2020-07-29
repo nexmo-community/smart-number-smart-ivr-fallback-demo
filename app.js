@@ -11,6 +11,7 @@
 // FALLBACK_SIP - The SIP URI to connect. This is used when FALLBACK_TYPE is set to 'sip'
 // VOICE_NAME - Nexmo voice to use for text-to-spech
 // PORT - The port the application should listen on
+require('dotenv').config()
 
 const express = require('express')
 const bodyParser = require('body-parser');
